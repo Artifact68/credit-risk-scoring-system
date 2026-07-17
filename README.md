@@ -53,25 +53,33 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements-dev.txt
 ```
 
-### 1. Загрузка данных
+### 1. Авторизация и загрузка данных
 
-Перед первым запуском авторизуйтесь в Kaggle и примите правила соревнования.
-После этого выполните:
+Сначала войдите в Kaggle, откройте страницу соревнования и примите его правила.
+Затем откройте настройки аккаунта Kaggle, перейдите в раздел **API** и нажмите
+**Generate New Token**.
+
+После получения токена запустите интерактивную авторизацию:
+
+```bash
+python scripts/download_data.py --login
+```
+
+Вставьте токен в терминал, когда `kagglehub` его запросит. После успешной
+авторизации датасет будет скачан и скопирован в `data/raw`.
+
+При последующих запусках повторный вход обычно не требуется:
 
 ```bash
 python scripts/download_data.py
 ```
 
-Скрипт использует следующий вызов:
+Вместо интерактивного входа токен можно сохранить в переменной окружения:
 
-```python
-import kagglehub
-
-path = kagglehub.competition_download("fintech-credit-scoring")
-print("Path to competition files:", path)
+```bash
+export KAGGLE_API_TOKEN="ваш_токен"
+python scripts/download_data.py
 ```
-
-Загруженные файлы копируются в `data/raw`.
 
 ### 2. Обучение модели
 

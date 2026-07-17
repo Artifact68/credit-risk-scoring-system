@@ -1,0 +1,9 @@
+services:
+  scoring-app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      MODEL_PATH: /app/models/credit_scoring.joblib
+    volumes:
+      - ./models:/app/models:ro

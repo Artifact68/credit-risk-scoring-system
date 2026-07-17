@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Сервис оценки кредитного риска клиента">
+  <title>Credit Risk Scoring</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">CREDIT RISK SCORING</p>
+        <h1>Оценка вероятности дефолта</h1>
+        <p class="hero-copy">
+          Заполните данные клиента. Сервис рассчитает вероятность дефолта,
+          скоринговый балл и покажет факторы, которые сильнее всего повлияли на результат.
+        </p>
+      </div>
+      <div class="status" id="model-status">
+        <span class="status-dot"></span>
+        <span>Проверяем модель…</span>
+      </div>
+    </header>
+
+    <section class="workspace">
+      <article class="panel form-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="section-number">01</p>
+            <h2>Данные клиента</h2>
+          </div>
+          <button class="text-button" id="fill-defaults" type="button">Заполнить пример</button>
+        </div>
+
+        <div class="notice hidden" id="setup-notice">
+          <strong>Модель пока не обучена.</strong>
+          <span>Запустите <code>python scripts/train.py</code>, затем перезапустите сервер.</span>
+        </div>
+
+        <form id="scoring-form">
+          <div class="form-grid" id="feature-fields"></div>
+          <button class="primary-button" id="submit-button" type="submit" disabled>
+            Рассчитать риск
+          </button>
+        </form>
+      </article>
+
+      <aside class="panel result-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="section-number">02</p>
+            <h2>Результат</h2>
+          </div>
+        </div>
+
+        <div class="empty-state" id="empty-state">
+          <div class="empty-icon">%</div>
+          <p>Результат появится после расчёта.</p>
+        </div>
+
+        <div class="result hidden" id="result">
+          <div class="score-row">
+            <div class="probability-ring" id="probability-ring">
+              <div>
+                <strong id="probability-value">0%</strong>
+                <span>вероятность дефолта</span>
+              </div>
+            </div>
+            <div class="score-summary">
+              <span class="risk-badge" id="risk-badge">—</span>
+              <p>Скоринговый балл</p>
+              <strong id="score-value">—</strong>
+              <span class="score-scale">из 1000</span>
+            </div>
+          </div>
+
+          <div class="decision-card">
+            <span>Рекомендация</span>
+            <strong id="decision-value">—</strong>
+          </div>
+
+          <div class="factors-block">
+            <h3>Основные факторы</h3>
+            <div id="factor-list" class="factor-list"></div>
+          </div>
+        </div>
+
+        <div class="error-box hidden" id="error-box"></div>
+      </aside>
+    </section>
+
+    <footer>
+      <span>Учебный проект по кредитному скорингу</span>
+      <a href="/docs" target="_blank" rel="noreferrer">API документация</a>
+    </footer>
+  </main>
+
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
